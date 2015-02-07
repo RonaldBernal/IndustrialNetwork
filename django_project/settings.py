@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -57,8 +58,10 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django',
+        #'ENGINE': 'mysql.connector.django',
+        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': '',
+        'NAME': 'industrial_network',
         'USER': 'django',
         'PASSWORD': 'xlSR0bCt4h',
         'HOST': 'localhost',
