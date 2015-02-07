@@ -17,6 +17,14 @@ body {
     color: #fed136;
 }
 
+.login-space{
+    margin-top: 1.5em;
+}
+
+.login-border{
+    border-right: 1px rgb(129, 129, 129) solid;
+}
+
 p {
     font-size: 14px;
     line-height: 1.75;
@@ -35,7 +43,7 @@ a.active {
 }
 
 a {
-    color: #fed136;
+    color: #000000;
 }
 
 a:hover,
