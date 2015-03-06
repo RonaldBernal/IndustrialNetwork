@@ -1,0 +1,53 @@
+.ui.inverted.menu .yellow.active.item {
+	color: #f2c61f !important;
+}
+.ui.inverted.menu .blue.active.item {
+	color: #3b83c0 !important;
+}
+.ui.inverted.menu .green.active.item{
+  color: #5bbd72 !important;
+}
+.ui.inverted.menu .orange.active.item{
+  color: #e07b53 !important;
+}
+.ui.inverted.menu .pink.active.item{
+  color: #d9499a !important;
+}
+.ui.inverted.menu .purple.active.item{
+  color: #564f8a !important;
+}
+.ui.inverted.menu .red.active.item{
+  color: #d95c5c !important;
+}
+.ui.inverted.menu .teal.active.item{
+  color: #00b5ad !important;
+}
+.brand {
+    font-family: "Kaushan Script","Helvetica Neue",Helvetica,Arial,cursive;
+    color: #fed136;
+}
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.navbar {
+  position: relative;
+  min-height: 50px;
+  margin-bottom: 20px;
+}
+.info{
+  font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
+  font-size: 1.071rem !important;
+}
+.info h4{
+	margin-top: 10px !important;
+	margin-bottom: 5px !important;
+}
+.ui.inverted.menu .navbarimg{
+    right: 0.5em;
+    width: 1.25em;
+    height: 1.25em;
+    bottom: 0em;
+}

@@ -4,6 +4,10 @@ from django.template import RequestContext, loader
 from datetime import datetime
 # Create your views here.
 
+def login(request):
+    now = datetime.now()
+    return render_to_response("general/login.html", {"year" : now})
+
 def home(request):
     now = datetime.now()
     return render_to_response("general/index.html", {"year" : now})
