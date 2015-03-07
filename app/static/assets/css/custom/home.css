@@ -51,3 +51,18 @@
     height: 1.25em;
     bottom: 0em;
 }
+.ui.footer.divider {
+  margin: 2rem 0rem;
+  margin-top: 4rem;
+  line-height: 4;
+  height: 0em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(0, 0, 0, 0.85);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
