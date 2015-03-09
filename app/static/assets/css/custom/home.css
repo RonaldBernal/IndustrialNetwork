@@ -1,3 +1,11 @@
+
+/* 
+ * Custom CSS made for Industrial network.
+ * Copyright 2015. 
+ * Re-use of this document is prohibited.
+ * Authors: Ronald Bernal & Antonio Hernández;
+ */ 
+
 .ui.inverted.menu .yellow.active.item {
 	color: #f2c61f !important;
 }
@@ -22,13 +30,21 @@
 .ui.inverted.menu .teal.active.item{
   color: #00b5ad !important;
 }
+.ui.inverted.menu .navbarimg{
+    right: 0.5em;
+    width: 1.25em;
+    height: 1.25em;
+    bottom: 0em;
+}
+
+
 .brand {
     font-family: "Kaushan Script","Helvetica Neue",Helvetica,Arial,cursive;
-    color: #fed136;
+    color: #fed136 !important;
 }
 .container {
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 4em;
+  padding-left: 4em;
   margin-right: auto;
   margin-left: auto;
 }
@@ -45,12 +61,14 @@
 	margin-top: 10px !important;
 	margin-bottom: 5px !important;
 }
-.ui.inverted.menu .navbarimg{
-    right: 0.5em;
-    width: 1.25em;
-    height: 1.25em;
-    bottom: 0em;
+h3.about{
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
 }
+h4.about{
+	margin-top: 0px !important;
+}
+
 .ui.footer.divider {
   margin: 2rem 0rem;
   margin-top: 4rem;

@@ -6,16 +6,27 @@ from datetime import datetime
 
 def login(request):
     now = datetime.now()
-    return render_to_response("general/login.html", {"year" : now})
-
+    template = loader.get_template("general/login.html")
+    context = RequestContext(request, {
+        "title": "Bienvenido!",
+        "year" : now
+    })
+    return HttpResponse(template.render(context))
+    
 def home(request):
     now = datetime.now()
-    return render_to_response("general/index.html", {"year" : now})
+    template = loader.get_template("general/index.html")
+    context = RequestContext(request, {
+        "title": "Industrial Network",
+        "year" : now
+    })
+    return HttpResponse(template.render(context))
 
 def product(request, id_product):
     template = loader.get_template("products/detail.html")
     context = RequestContext(request, {
-        "title": "Prueba",
+        "title": "Vista Detalle",
+        "product_name": id_product
     })
-    #return HttpResponse(template.render(context))
-    return HttpResponse("Producto %s" % id_product)
+    return HttpResponse(template.render(context))
+    #return HttpResponse("Producto %s" % id_product)

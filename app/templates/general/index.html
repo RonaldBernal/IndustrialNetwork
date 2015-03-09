@@ -9,7 +9,7 @@
    <meta name="author" content="Ronald Bernal y Antonio Hernández">
 
    <!-- Site Properities -->
-   <title>Industrial Network</title>
+   <title>{{title}}</title>
 
    {% load staticfiles %}
    <!-- Semantic UI Core CSS -->
@@ -21,14 +21,16 @@
 </head>
 
 <body>
+   <!-- navbar begins -->
    <div class="navbar">
       <div class="ui inverted large menu">
          <div class="left menu">
             <a class="brand item">
                <i class="settings icon"></i>Industrial Network
             </a>
-            <a class="active yellow item">Perfil
+            <a href="/profile/" class="active yellow item">
                <img class="ui navbarimg left floated avatar image" src="{% static "assets/img/white-image.png" %}">
+               Perfil
             </a>
          </div>
          <div class="right menu">
@@ -38,29 +40,36 @@
                   <input type="text" placeholder="Buscar...">
                </div>
             </div>
-            <a class="item">
+            <a href="/messages/" class="item">
                <i class="comments outline icon"></i> Mensajes
             </a>
             <a class="blue item">
                <i class="users icon"></i> Contactos
             </a>
+            
+
+
             <div class="ui inverted compact menu">
-               <div class="ui simple dropdown item">
-                  <i class="dropdown icon"></i>Opciones
+               <div class="ui dropdown item">
+                  <i class="left options icon"></i>
+                  Opciones
+                  <i class="dropdown icon"></i>
                   <div class="menu">
                      <div class="item">Privacidad</div>
                      <div class="item">Pagos</div>
-                     <div class="item">Cerrar Sesión</div>
+                     <div href="/login/" class="item">Cerrar Sesión</div>
                   </div>
                </div>
             </div>
+
          </div>
       </div>
    </div>
+   <!-- navbar ends -->
 
    <div class="container">
       <div class="ui middle aligned grid">
-         <div class="equal height divided row">
+         <div class="doubling row">
             <div class="three wide column">
                <img class="ui medium bordered image" src="{% static "assets/img/white-image.png" %}">
             </div>
@@ -92,8 +101,8 @@
                      </div>
                      <div class="column">
                         <div class="ui horizontal segment">
-                           <h3 class="ui header">Acerca de nosotros</h3>
-                           <h4 class="ui header">Descripción:</h4>
+                           <h3 class="about ui header center aligned">Acerca de nosotros</h3>
+                           <h4 class="about ui header">Descripción:</h4>
                            <p>lorem ipsum</p>
                            <h4 class="ui header">Misión:</h4>
                            <p>lorem ipsum</p>
@@ -106,111 +115,166 @@
             </div>
          </div>
       </div>
-      <div class="container">
-         <div class="ui centered grid">
-            <div class="equal height centered row">
-               <div class="sixteen wide column">
-                  <a href="#" class="ui yellow right ribbon label">
-                     <i class="add circle icon"></i>Agregar Producto
-                  </a>
-                  <div class="ui four column grid">
-                     <div class="column">
-                        <h5 class="ui top attached center aligned header">Product Name</h5>
-                        <div class="ui attached segment">
-                           <img class="ui centered image" src="{% static "assets/img/image.png" %}">
-                           <h5 class="ui header">Descripción</h5>
-                           <p>Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos choro alterum definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.</p>
-                           <div class="ui divider"></div>
-                           <div class="ui two column grid">
-                              <div class="left floated middle aligned column">
-                                 <div class="ui yellow label">
-                                    Cant. mínima
-                                    <div class="detail">100</div>
-                                 </div>
-                              </div>
-                              <div class="right floated column">
-                                 <div class="ui green tag label">
-                                    $10.0
-                                    <div class="detail">C/U</div>
-                                 </div>
+
+      <div id="products" class="ui centered grid">
+         <div class="equal height centered row">
+            <div class="sixteen wide column">
+               <a href="#" class="ui yellow right ribbon label">
+                  <i class="add circle icon"></i>Agregar Producto
+               </a>
+               <div class="ui four doubling special cards">
+                  <div class="ui fluid card">
+                     <div class="dimmable image">
+                        <div class="ui dimmer">
+                           <div class="content">
+                              <div class="center">
+                                 <a href="/product/1" class="ui inverted yellow button">Ver detalle</a>
                               </div>
                            </div>
                         </div>
-                        <div class="ui blue bottom attached button">Contactar ahora!</div>
+                        <img src="{% static "assets/img/image.png" %}">
                      </div>
-                     <div class="column">
-                        <h5 class="ui top attached center aligned header">Product Name</h5>
-                        <div class="ui attached segment">
-                           <img class="ui centered image" src="{% static "assets/img/image.png" %}">
-                           <h5 class="ui header">Descripción</h5>
-                           <p>Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos choro alterum definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.</p>
-                           <div class="ui divider"></div>
-                           <div class="ui two column grid">
-                              <div class="left floated middle aligned column">
-                                 <div class="ui yellow label">
-                                    Cant. mínima
-                                    <div class="detail">100</div>
-                                 </div>
+                     <div class="content">
+                        <a class="header" href="/product/1">Product Name</a>
+                        <div class="meta">
+                           <a class="group">Descripción</a>
+                        </div>
+                        <div class="justified description">
+                           Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos choro alterum definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.
+                        </div>
+                     </div>
+                     <div class="extra content">
+                        <div class="ui two column grid">
+                           <div class="left floated middle aligned column">
+                              <div class="ui yellow label">
+                                 Cant. Min.
+                                 <div class="detail">100</div>
                               </div>
-                              <div class="right floated column">
-                                 <div class="ui green tag label">
-                                    $10.0
-                                    <div class="detail">C/U</div>
-                                 </div>
+                           </div>
+                           <div class="right floated column">
+                              <div class="ui green tag label">
+                                 $10.0
+                                 <div class="detail">C/U</div>
                               </div>
                            </div>
                         </div>
-                        <div class="ui blue bottom attached button">Contactar ahora!</div>
                      </div>
-                     <div class="column">
-                        <h5 class="ui top attached center aligned header">Product Name</h5>
-                        <div class="ui attached segment">
-                           <img class="ui centered image" src="{% static "assets/img/image.png" %}">
-                           <h5 class="ui header">Descripción</h5>
-                           <p>Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos choro alterum definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.</p>
-                           <div class="ui divider"></div>
-                           <div class="ui two column grid">
-                              <div class="left floated middle aligned column">
-                                 <div class="ui yellow label">
-                                    Cant. mínima
-                                    <div class="detail">100</div>
-                                 </div>
-                              </div>
-                              <div class="right floated column">
-                                 <div class="ui green tag label">
-                                    $10.0
-                                    <div class="detail">C/U</div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="ui blue bottom attached button">Contactar ahora!</div>
-                     </div>
-                     <div class="column">
-                        <h5 class="ui top attached center aligned header">Product Name</h5>
-                        <div class="ui attached segment">
-                           <img class="ui centered image" src="{% static "assets/img/image.png" %}">
-                           <h5 class="ui header">Descripción</h5>
-                           <p>Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos choro alterum definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.</p>
-                           <div class="ui divider"></div>
-                           <div class="ui two column grid">
-                              <div class="left floated middle aligned column">
-                                 <div class="ui yellow label">
-                                    Cant. mínima
-                                    <div class="detail">100</div>
-                                 </div>
-                              </div>
-                              <div class="right floated column">
-                                 <div class="ui green tag label">
-                                    $10.0
-                                    <div class="detail">C/U</div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="ui blue bottom attached button">Contactar ahora!</div>
-                     </div>
+                     <div class="ui blue bottom attached button">Contactar ahora!</div>
                   </div>
+                  <div class="ui fluid card">
+                     <div class="dimmable image">
+                        <div class="ui dimmer">
+                           <div class="content">
+                              <div class="center">
+                                 <a href="/product/1" class="ui inverted yellow button">Ver detalle</a>
+                              </div>
+                           </div>
+                        </div>
+                        <img src="{% static "assets/img/image.png" %}">
+                     </div>
+                     <div class="content">
+                        <a class="header" href="/product/1">Product Name</a>
+                        <div class="meta">
+                           <a class="group">Descripción</a>
+                        </div>
+                        <div class="justified description">
+                           Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos choro alterum definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.
+                        </div>
+                     </div>
+                     <div class="extra content">
+                        <div class="ui two column grid">
+                           <div class="left floated middle aligned column">
+                              <div class="ui yellow label">
+                                 Cant. Min.
+                                 <div class="detail">100</div>
+                              </div>
+                           </div>
+                           <div class="right floated column">
+                              <div class="ui green tag label">
+                                 $10.0
+                                 <div class="detail">C/U</div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="ui blue bottom attached button">Contactar ahora!</div>
+                  </div>                  
+                  <div class="ui fluid card">
+                     <div class="dimmable image">
+                        <div class="ui dimmer">
+                           <div class="content">
+                              <div class="center">
+                                 <a href="/product/1" class="ui inverted yellow button">Ver detalle</a>
+                              </div>
+                           </div>
+                        </div>
+                        <img src="{% static "assets/img/image.png" %}">
+                     </div>
+                     <div class="content">
+                        <a class="header" href="/product/1">Product Name</a>
+                        <div class="meta">
+                           <a class="group">Descripción</a>
+                        </div>
+                        <div class="justified description">
+                           Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos choro alterum definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.
+                        </div>
+                     </div>
+                     <div class="extra content">
+                        <div class="ui two column grid">
+                           <div class="left floated middle aligned column">
+                              <div class="ui yellow label">
+                                 Cant. Min.
+                                 <div class="detail">100</div>
+                              </div>
+                           </div>
+                           <div class="right floated column">
+                              <div class="ui green tag label">
+                                 $10.0
+                                 <div class="detail">C/U</div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="ui blue bottom attached button">Contactar ahora!</div>
+                  </div>                  
+                  <div class="ui fluid card">
+                     <div class="dimmable image">
+                        <div class="ui dimmer">
+                           <div class="content">
+                              <div class="center">
+                                 <a href="/product/1" class="ui inverted yellow button">Ver detalle</a>
+                              </div>
+                           </div>
+                        </div>
+                        <img src="{% static "assets/img/image.png" %}">
+                     </div>
+                     <div class="content">
+                        <a class="header" href="/product/1">Product Name</a>
+                        <div class="meta">
+                           <a class="group">Descripción</a>
+                        </div>
+                        <div class="justified description">
+                           Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos choro alterum definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.
+                        </div>
+                     </div>
+                     <div class="extra content">
+                        <div class="ui two column grid">
+                           <div class="left floated middle aligned column">
+                              <div class="ui yellow label">
+                                 Cant. Min.
+                                 <div class="detail">100</div>
+                              </div>
+                           </div>
+                           <div class="right floated column">
+                              <div class="ui green tag label">
+                                 $10.0
+                                 <div class="detail">C/U</div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="ui blue bottom attached button">Contactar ahora!</div>
+                  </div>                     
                </div>
             </div>
          </div>
@@ -238,5 +302,15 @@
    <!-- Used with Tab History !-->
    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
    <script type="text/javascript" src="{% static "assets/js/semantic.js" %}"></script>
+   <script type="text/javascript">
+      $('.special.cards .image').dimmer({
+         on: 'hover'
+      });
+      $('.dropdown').dropdown({
+         //transition: 'drop'
+         action: 'hide'
+      });
+   </script>
+
 </body>
 </html>
