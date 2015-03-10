@@ -46,22 +46,18 @@
             <a class="blue item">
                <i class="users icon"></i> Contactos
             </a>
-            
-
-
-            <div class="ui inverted compact menu">
-               <div class="ui dropdown item">
-                  <i class="left options icon"></i>
-                  Opciones
-                  <i class="dropdown icon"></i>
-                  <div class="menu">
-                     <div class="item">Privacidad</div>
-                     <div class="item">Pagos</div>
-                     <div href="/login/" class="item">Cerrar Sesión</div>
-                  </div>
+            <!-- dropdown begins-->
+            <div class="ui dropdown item">
+               <i class="left options icon"></i>
+               Opciones
+               <i class="dropdown icon"></i>
+               <div class="menu">
+                  <a class="item">Privacidad</a>
+                  <a class="item">Pagos</a>
+                  <a class="item" href="/">Cerrar Sesión</a>
                </div>
             </div>
-
+            <!-- dropdown ends-->
          </div>
       </div>
    </div>
@@ -119,7 +115,7 @@
       <div id="products" class="ui centered grid">
          <div class="equal height centered row">
             <div class="sixteen wide column">
-               <a href="#" class="ui yellow right ribbon label">
+               <a href="#" id="add_prod" class="ui yellow right ribbon label">
                   <i class="add circle icon"></i>Agregar Producto
                </a>
                <div class="ui four doubling special cards">
@@ -280,6 +276,70 @@
          </div>
       </div>
    </div>
+
+   <div class="ui modal">
+      <i class="close icon"></i>
+      <div class="header">
+         Registro de Producto
+      </div>
+      <div class="content">
+         
+         <div class="ui divided middle aligned grid">
+            <div class="six wide column">
+               <div class="ui piled segment">
+                  <img class="ui centered small image" src="{% static "assets/img/image-square.png" %}">
+               </div>
+               <div class="ui five column equal height grid">
+                  <div class="column">
+                     <i class="big bordered add circle icon link icon"></i>
+                  </div>
+               </div>
+            </div>
+            <div class="ten wide column">
+               <form class="ui form">
+                  <h4 class="ui dividing header">Información del producto</h4>
+                  <div class="required field">
+                     <label>Nombre del producto</label>
+                     <div class="ui icon input">
+                        <input type="text" placeholder="Nombre del producto">
+                        <i class="write icon"></i>
+                     </div>
+                  </div>
+                  <div class="required field">
+                     <label>Descripción del producto</label>
+                     <textarea></textarea>
+                  </div>
+                  <div class="two fields">
+                     <div class="required field">
+                        <label>Cantidad Mínima de venta</label>
+                        <div class="ui icon input">
+                           <input type="integer" placeholder="Cantidad en números enteros">
+                           <i class="tag icon"></i>
+                        </div>
+                     </div>
+                     <div class="required field">
+                        <label>Precio por unidad</label>
+                        <div class="ui icon input">
+                           <input type="number" step="0.01" min="0" placeholder="Precio en pesos mexicanos">
+                           <i class="dollar icon"></i>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <div class="actions">
+         <div class="ui red button">
+            Cancelar
+         </div>
+         <div class="ui positive right labeled icon button">
+            Agregar producto
+         <i class="checkmark icon"></i>
+         </div>
+      </div>
+   </div>
+
    <div class="ui footer divider"></div>
    <footer>
         <div class="container">
@@ -302,15 +362,7 @@
    <!-- Used with Tab History !-->
    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
    <script type="text/javascript" src="{% static "assets/js/semantic.js" %}"></script>
-   <script type="text/javascript">
-      $('.special.cards .image').dimmer({
-         on: 'hover'
-      });
-      $('.dropdown').dropdown({
-         //transition: 'drop'
-         action: 'hide'
-      });
-   </script>
+   <script type="text/javascript" src="{% static "assets/js/custom.js" %}"></script>
 
 </body>
 </html>
