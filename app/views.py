@@ -18,7 +18,7 @@ def profile(request):
     template = loader.get_template("general/profile.html")
     context = RequestContext(request, {
         "title": "Industrial Network",
-        "year" : now
+        #"year" : now
     })
     return HttpResponse(template.render(context))
 

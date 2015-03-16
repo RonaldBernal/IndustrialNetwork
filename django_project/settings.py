@@ -58,9 +58,9 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        #'ENGINE': 'mysql.connector.django',
+        'ENGINE': 'mysql.connector.django',
         #'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'ENGINE': '',
+        #'ENGINE': '',
         'NAME': 'industrial_network',
         'USER': 'django',
         'PASSWORD': 'xlSR0bCt4h',
