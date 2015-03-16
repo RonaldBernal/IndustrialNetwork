@@ -58,6 +58,7 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 
 DATABASES = {
     'default': {
+        
         'ENGINE': 'mysql.connector.django',
         #'ENGINE': 'django.db.backends.postgresql_psycopg2',
         #'ENGINE': '',
@@ -87,3 +88,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'

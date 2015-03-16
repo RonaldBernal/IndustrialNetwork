@@ -17,3 +17,9 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
 )
+
+from django.conf import settings
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'%s(?P<path>.*)' % settings.MEDIA_URL[1:], 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+    )
