@@ -5,6 +5,7 @@ from datetime import datetime
 from django.contrib.auth import login as django_login, authenticate, logout as django_logout
 from django.core.context_processors import csrf
 from app.forms import RegistrationForm, AuthenticationForm, ProductForm
+from app.models import *
 # Create your views here.
 
 def landing(request):
@@ -19,12 +20,23 @@ def landing(request):
 def profile(request):
     now = datetime.now()
     template = loader.get_template('general/profile.html')
+    
+    profile = User.objects.get(id=1)
+
+    print profile.name
+
     context = RequestContext(request, {
-        "title": "Industrial Network",
-        #"year" : now
+        "user_id": request.user.id,
+        "name" : profile.name,
+        "contact" : profile.contact,
+        "phone" : profile.phone,
+        "address" : profile.address,
+        "description" : profile.descripction,
+        "mision" : profile.mision,
+        "vision" : profile.vision
     })
-    return render_to_response('general/profile.html', 
-                                {'user_id': request.user.id})
+
+    return render_to_response('general/profile.html', context)
 
 def new_product(request):
     context = RequestContext(request)
