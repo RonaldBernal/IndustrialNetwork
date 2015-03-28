@@ -1,32 +1,69 @@
-from django.shortcuts import render_to_response
-from django.http import HttpResponse
+from django.shortcuts import render_to_response, redirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from datetime import datetime
+from django.contrib.auth import login as django_login, authenticate, logout as django_logout
+from django.core.context_processors import csrf
+from app.forms import RegistrationForm, AuthenticationForm
 # Create your views here.
 
 def landing(request):
-    now = datetime.now()
-    template = loader.get_template("general/landing.html")
-    context = RequestContext(request, {
-        "title": "Bienvenido!"
-        #"year" : now
-    })
-    return HttpResponse(template.render(context))
-    
+	now = datetime.now()
+	template = loader.get_template('general/landing.html')
+	context = RequestContext(request, {
+		"title": "Bienvenido!"
+		#"year" : now
+	})
+	return HttpResponse(template.render(context))
+	
 def profile(request):
-    now = datetime.now()
-    template = loader.get_template("general/profile.html")
-    context = RequestContext(request, {
-        "title": "Industrial Network",
-        #"year" : now
-    })
-    return HttpResponse(template.render(context))
+	now = datetime.now()
+	template = loader.get_template('general/profile.html')
+	context = RequestContext(request, {
+		"title": "Industrial Network",
+		#"year" : now
+	})
+	return render_to_response('general/profile.html', 
+								{'user_id': request.user.id})
 
 def product(request, id_product):
-    template = loader.get_template("products/detail.html")
-    context = RequestContext(request, {
-        "title": "Vista Detalle",
-        "product_name": id_product
-    })
-    return HttpResponse(template.render(context))
-    #return HttpResponse("Producto %s" % id_product)
+	template = loader.get_template('products/detail.html')
+	context = RequestContext(request, {
+		"title": "Vista Detalle",
+		"product_name": id_product
+	})
+	return HttpResponse(template.render(context))
+
+def login(request):
+	if request.method == 'POST':
+		form = AuthenticationForm(data=request.POST)
+		if form.is_valid():
+			user = authenticate(email=request.POST['email'], password=request.POST['password'])
+			if user is not None:
+				if user.is_active:
+					django_login(request, user)
+					return redirect('/profile')
+	else:
+		form = AuthenticationForm()
+	return render_to_response('general/login.html', {
+		'form': form,
+	}, context_instance=RequestContext(request))
+
+def register(request):
+	if request.method == 'POST':
+		form = RegistrationForm(data=request.POST)
+		if form.is_valid():
+			user = form.save()
+			return redirect('/profile')
+	else:
+		form = RegistrationForm()
+	return render_to_response('general/register.html', {
+		'form': form,
+	}, context_instance=RequestContext(request))
+
+def logout(request):
+	"""
+	Log out view
+	"""
+	django_logout(request)
+	return redirect('/')

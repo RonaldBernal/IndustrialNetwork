@@ -66,7 +66,7 @@ DATABASES = {
         'USER': 'django',
         'PASSWORD': 'xlSR0bCt4h',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '3306',
     }
 }
 
@@ -89,4 +89,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/app/media/'
