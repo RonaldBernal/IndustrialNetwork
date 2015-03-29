@@ -282,38 +282,52 @@
                         {% block content %}
                             <form method="post" action="">
                                 {% csrf_token %}
-                                {% if form.error %}
+                                {% if r_form.error %}
                                     <p class="error"> Error </p>
                                 {% endif %}
     
                                 <div class="row">
                                     <div class="col-md-offset-1 col-md-5">
-                                        {{form.name}}
+                                        <div class="form-group">
+                                            {{r_form.name}}
+                                        </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
-                                            {{form.email}}
+                                            {{r_form.client_type}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <div class="form-group">
+                                            {{r_form.email}}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-offset-1 col-md-5">
                                         <div class="form-group">
-                                            {{form.password1}}
+                                            {{r_form.password1}}
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
-                                            {{form.password2}}
+                                            {{r_form.password2}}
                                         </div>
                                     </div>
                                 </div>
-                                {{form.last_login}}
+                                {{r_form.last_login}}
                                  <script>
                                     var e = document.getElementById("id_last_login");
                                     var d = new Date();
-                                    var r = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() +":" + d.getSeconds() + "." + d.getMilliseconds();
-                                    alert(r);
+                                    var r = d.getFullYear() + "-" + 
+                                    ("0" + (d.getMonth() + 1)).slice(-2) + "-" + 
+                                    ("0" + d.getDate()).slice(-2) + " " + 
+                                    ("0" + d.getHours()).slice(-2) + ":" + 
+                                    ("0" + d.getMinutes()).slice(-2) +":" + 
+                                    ("0" + d.getSeconds()).slice(-2) + "." + 
+                                    ("000000" + d.getMilliseconds()).slice(-6);
                                     e.value = r;
                                 </script>
                                 <div class="row">

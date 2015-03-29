@@ -19,7 +19,7 @@ def landing(request):
         form = RegistrationForm()
     
     return render_to_response('general/landing.html', {
-        'form': form,
+        'r_form': form,
     }, context_instance=RequestContext(request))
     
 def profile(request, id):
@@ -101,7 +101,7 @@ def login(request):
             if user is not None:
                 if user.is_active:
                     django_login(request, user)
-                    return redirect('/profile')
+                    return redirect('/profile/1/')
     else:
         form = AuthenticationForm()
     return render_to_response('general/login.html', {
@@ -113,7 +113,7 @@ def register(request):
         form = RegistrationForm(data=request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect('/profile')
+            return redirect('/profile/1/')
     else:
         form = RegistrationForm()
     return render_to_response('general/register.html', {

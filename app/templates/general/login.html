@@ -13,17 +13,16 @@
 <body>
 	{% block content %}
 		<form method="post" action="login">
-		{% csrf_token %}
-		{% if form.error %}
-			<p class="error"> Sorry, that's not a valid username or password </p>
-		{% endif %}
+			{% csrf_token %}
+			{% if form.error %}
+				<p class="error"> Sorry, that's not a valid username or password </p>
+			{% endif %}
 
-		{{ form.as_table }}
-		<input type="submit" value="Comment" />
+			{{ form.as_table }}
 
+			<input type="submit" value="Comment" />
   		</form>
-
 	{% endblock %}
-	</body>
-
+	
+</body>
 </html>

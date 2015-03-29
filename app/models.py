@@ -14,7 +14,7 @@ class User(AbstractBaseUser):
     contact = models.CharField(max_length = 100, default='')
     phone = models.CharField(max_length = 10, default='')
     address = models.CharField(max_length = 100, default='')
-    descripction = models.CharField(max_length = 1000, default='')
+    description = models.CharField(max_length = 1000, default='')
     mision = models.CharField(max_length = 1000, default='')
     vision = models.CharField(max_length = 1000, default='')
     profile_picture = models.ImageField(upload_to = 'app/media/profile_pictures/', default = 'app/media/default/profile_default.png')
