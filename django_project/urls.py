@@ -9,8 +9,8 @@ urlpatterns = patterns('',
 
     # User auth url
     url(r'^$', 'app.views.landing', name ='landing'),
-    url(r'^profile/$', 'app.views.profile', name = 'profile'),
-    url(r'^product&(\d+)$', 'app.views.product', name='product'),
+    url(r'^profile/(\d+)$', 'app.views.profile', name = 'profile'),
+    url(r'^product/(\d+)$', 'app.views.product', name='product'),
     url(r'^product/new$', 'app.views.new_product', name='product'),
     #url(r'^auth/$', 'app.views.auth_view', name='user_auth'),
     #url(r'^invalid/$', 'app.views.invalid_login', name='invalid_login'),

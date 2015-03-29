@@ -17,23 +17,30 @@ def landing(request):
     })
     return HttpResponse(template.render(context))
     
-def profile(request):
+def profile(request, id):
     now = datetime.now()
     template = loader.get_template('general/profile.html')
-    
-    profile = User.objects.get(id=1)
+    profile_user = None
+    try:
+        profile_user = User.objects.get( id=int(id) ) # Url args are string by default
+    except Exception, e:
+        # If user was not found
+        '''
+            IMPORTANTE!!
+            Colocar id propio en lugar de utilizar 1
 
-    print profile.name
+        '''
+        return redirect('/profile/1')
 
     context = RequestContext(request, {
         "user_id": request.user.id,
-        "name" : profile.name,
-        "contact" : profile.contact,
-        "phone" : profile.phone,
-        "address" : profile.address,
-        "description" : profile.descripction,
-        "mision" : profile.mision,
-        "vision" : profile.vision
+        "name" : profile_user.name,
+        "contact" : profile_user.contact,
+        "phone" : profile_user.phone,
+        "address" : profile_user.address,
+        "description" : profile_user.descripction,
+        "mision" : profile_user.mision,
+        "vision" : profile_user.vision
     })
 
     return render_to_response('general/profile.html', context)
