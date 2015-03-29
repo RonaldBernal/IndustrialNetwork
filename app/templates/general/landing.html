@@ -279,49 +279,52 @@
                 </div>
                 <div class="col-lg-6 text-center">
                     <h2 class="section-heading">Registro</h2>
-                    <form name="signin" id="signin" novalidate>
-                        <div class="row">
-                        	<div class="col-md-offset-1 col-md-5">
-                            	<div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Nombre de la empresa *" id="rgbname">
+                        {% block content %}
+                            <form method="post" action="">
+                                {% csrf_token %}
+                                {% if form.error %}
+                                    <p class="error"> Error </p>
+                                {% endif %}
+    
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-5">
+                                        {{form.name}}
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            {{form.email}}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-5">
-                            	<select class="form-control" id="rtipocliente">
-                            		<option value="" selected disabled>Tipo de cliente</option>
-								    <option value="fabrica">Fábrica</option>
-								    <option value="dist">Distribuidora</option>
-								    <option value="cliente">Cliente final</option>
-								</select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-offset-1 col-md-10">
-                            	<div class="form-group">
-                                    <input type="email" class="form-control" placeholder="Correo Electrónico *" id="remail">
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-5">
+                                        <div class="form-group">
+                                            {{form.password1}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            {{form.password2}}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                        	<div class="col-md-offset-1 col-md-5">
-                        		<div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Contraseña *" id="rpsswd">
-                                </div>
-                        	</div>
-                            <div class="col-md-5">
-                            	<div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Confirmar contraseña *" 
-                                    id="rconfpsswd">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                        	<div class="clearfix"></div>
-                        	<div class="col-lg-12 text-center">
-                            	<button type="submit" class="btn btn-xl">Registrarse</button>
-	                        </div>
-	                    </div>
-                    </form>    
+                                {{form.last_login}}
+                                 <script>
+                                    var e = document.getElementById("id_last_login");
+                                    var d = new Date();
+                                    var r = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() +":" + d.getSeconds() + "." + d.getMilliseconds();
+                                    alert(r);
+                                    e.value = r;
+                                </script>
+                                <div class="row">
+                                    <div class="clearfix"></div>
+                                    <div class="col-lg-12 text-center">
+                                        <button type="submit" class="btn btn-xl">Registrarse</button>
+                                    </div>
+                                </div> 
+                            </form>
+
+                        {% endblock %}
                 </div>
             </div>
         </div>

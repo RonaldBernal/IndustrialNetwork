@@ -9,13 +9,18 @@ from app.models import *
 # Create your views here.
 
 def landing(request):
-    now = datetime.now()
-    template = loader.get_template('general/landing.html')
-    context = RequestContext(request, {
-        "title": "Bienvenido!"
-        #"year" : now
-    })
-    return HttpResponse(template.render(context))
+    if request.method == 'POST':
+        form = RegistrationForm(data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            return redirect('/profile/1')
+        print form.errors
+    else:
+        form = RegistrationForm()
+    
+    return render_to_response('general/landing.html', {
+        'form': form,
+    }, context_instance=RequestContext(request))
     
 def profile(request, id):
     template = loader.get_template('general/profile.html')
