@@ -3,7 +3,7 @@ from app.models import Product
 
 class ProductForm(forms.ModelForm):
     name = forms.CharField(label="Producto")
-    descripction = forms.CharField(label="Descripcion")
+    description = forms.CharField(label="Descripcion")
     minimum_sale = forms.IntegerField()
     unit_price = forms.FloatField()
 

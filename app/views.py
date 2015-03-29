@@ -34,7 +34,7 @@ def profile(request, id):
             Colocar id propio en lugar de utilizar 1
 
         '''
-        return redirect('/profile/1')
+        return redirect('/')
 
     data = RequestContext(request, {
         "user_id": request.user.id,
@@ -42,7 +42,7 @@ def profile(request, id):
         "contact" : profile_user.contact,
         "phone" : profile_user.phone,
         "address" : profile_user.address,
-        "description" : profile_user.descripction,
+        "description" : profile_user.description,
         "mision" : profile_user.mision,
         "vision" : profile_user.vision
     })
