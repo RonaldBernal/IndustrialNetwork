@@ -18,7 +18,6 @@ def landing(request):
     return HttpResponse(template.render(context))
     
 def profile(request, id):
-    now = datetime.now()
     template = loader.get_template('general/profile.html')
     profile_user = None
     try:
@@ -32,7 +31,7 @@ def profile(request, id):
         '''
         return redirect('/profile/1')
 
-    context = RequestContext(request, {
+    data = RequestContext(request, {
         "user_id": request.user.id,
         "name" : profile_user.name,
         "contact" : profile_user.contact,
@@ -43,7 +42,22 @@ def profile(request, id):
         "vision" : profile_user.vision
     })
 
-    return render_to_response('general/profile.html', context)
+    context = RequestContext(request)
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            data["form"] = ProductForm()
+            form.save(commit=True)
+            return render_to_response('general/profile.html', data, context)
+        else:
+            # The supplied form contained errors - just print them to the terminal.
+            data["form"] = form
+            print form.errors
+    else:
+        data["form"] = ProductForm()
+
+    
+    return render_to_response('general/profile.html', data, context)
 
 def new_product(request):
     context = RequestContext(request)
