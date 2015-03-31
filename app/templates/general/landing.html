@@ -248,87 +248,90 @@
     </section>
 
     <div id="login"></div>
-
-    <section id="registro">
-        <div class="container">
-            <div class="row">
-            	<div class="col-lg-6 text-center login-border">
-                    <h2 class="section-heading">Iniciar Sesión</h2>
-                    <form name="login" id="login" novalidate>
-                        <div class="row login-space">
-                            <div class="col-md-offset-3 col-md-6">
-                            	<div class="form-group">
-                                    <input type="email" class="form-control" placeholder="Correo Electrónico *" id="lginemail">
+    {% block content %}
+        <section id="registro">
+            <div class="container">
+                <div class="row">
+                	<div class="col-lg-6 text-center login-border">
+                        <h2 class="section-heading">Iniciar Sesión</h2>
+                        <form id="lgin_form" method="post" action="/login/"> {% csrf_token %}
+                            {% if r_form.error %}
+                                <p class="error"> Error </p>
+                            {% endif %}
+                            <div class="row login-space">
+                                <div class="col-md-offset-3 col-md-6">
+                                	<div class="form-group">
+                                        {{l_form.username}}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row login-space">
-                        	<div class="col-md-offset-3 col-md-6">
-                                <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Contraseña *" id="lginpsswd">
+                            <div class="row login-space">
+                            	<div class="col-md-offset-3 col-md-6">
+                                    <div class="form-group">
+                                        {{l_form.password}}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row login-space">
-                            <div class="clearfix"></div>
-                            <div class="col-lg-12 text-center">
-                            	<button type="submit" class="btn btn-xl">Iniciar Sesión</button>
+                            <div class="row login-space">
+                                <div class="clearfix"></div>
+                                <div class="col-lg-12 text-center">
+                                	<button type="submit" class="btn btn-xl">Iniciar Sesión</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-lg-6 text-center">
-                    <h2 class="section-heading">Registro</h2>
-                        {% block content %}
-                            <form id="reg_form" method="post" action=""> {% csrf_token %}
-                                {% if r_form.error %}
-                                    <p class="error"> Error </p>
-                                {% endif %}    
-                                <div class="row">
-                                    <div class="col-md-offset-1 col-md-5">
-                                        <div class="form-group">
-                                            {{r_form.first_name}}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            {{r_form.last_name}}
-                                        </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <h2 class="section-heading">Registro</h2>
+                        <form id="reg_form" method="post" action="/register/"> {% csrf_token %}
+                            {% if r_form.error %}
+                                <p class="error"> Error </p>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-5">
+                                    <div class="form-group">
+                                        {{r_form.first_name}}
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-offset-1 col-md-10">
-                                        <div class="form-group">
-                                            {{r_form.username}}
-                                        </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        {{r_form.last_name}}
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-offset-1 col-md-5">
-                                        <div class="form-group">
-                                            {{r_form.password1}}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            {{r_form.password2}}
-                                        </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-10">
+                                    <div class="form-group">
+                                        {{r_form.username}}
                                     </div>
                                 </div>
-                                {{r_form.email}}
-                                <div class="row">
-                                    <div class="clearfix"></div>
-                                    <div class="col-lg-12 text-center">
-                                        <button class="btn btn-xl" onclick="getEmail()">Registrarse</button>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-5">
+                                    <div class="form-group">
+                                        {{r_form.password1}}
                                     </div>
-                                </div> 
-                            </form>
-                        {% endblock %}
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        {{r_form.password2}}
+                                    </div>
+                                </div>
+                            </div>
+                            {{r_form.email}}
+                            <div class="row">
+                                <div class="clearfix"></div>
+                                <div class="col-lg-12 text-center">
+                                    <button class="btn btn-xl" onclick="getEmail()">Registrarse</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-
+        </section>
+    {% endblock %}
+    <hr style="border-top: 1px solid #BABABA;">
+    
     <footer>
         <div class="container">
             <div class="row">
