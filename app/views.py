@@ -33,35 +33,34 @@ def profile(request):
     profile_user = None
     profile_user = User.objects.get(pk = user_id)
     
-    '''
+    
     dictionary = RequestContext(request, {
-        "user_id": request.user.id,
-        "name" : profile_user.client.name,
-        "contact" : profile_user.client.contact,
-        "phone" : profile_user.client.phone,
-        "address" : profile_user.client.address,
-        "description" : profile_user.client.description,
-        "mision" : profile_user.client.mision,
-        "vision" : profile_user.client.vision
+        "user_id": user_id,
+        #"name" : profile_user.client.name,
+        "contact" : profile_user.get_full_name(),
+        #"phone" : profile_user.client.phone,
+        #"address" : profile_user.client.address,
+        #"description" : profile_user.client.description,
+        #"mision" : profile_user.client.mision,
+        #"vision" : profile_user.client.vision
     })
-    '''
+    
+    
     context = RequestContext(request)
     if request.method == 'POST':
         form = ProductForm(request.POST)
-    '''
         if form.is_valid():
             dictionary["form"] = ProductForm()
             form.save(commit = True)
             return render_to_response('general/profile.html', dictionary, context)
         else:
-             The supplied form contained errors - just print them to the terminal.
+            #The supplied form contained errors - just print them to the terminal.
             dictionary["form"] = form
             print form.errors
     else:
         dictionary["form"] = ProductForm()
-    '''
     
-    return render_to_response('general/profile.html', context) ##add dictionary
+    return render_to_response('general/profile.html', dictionary) #, context)
 
 @login_required(login_url='/')
 @csrf_protect
