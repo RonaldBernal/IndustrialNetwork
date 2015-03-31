@@ -52,6 +52,7 @@ ROOT_URLCONF = 'django_project.urls'
 
 WSGI_APPLICATION = 'django_project.wsgi.application'
 
+AUTH_PROFILE_MODULE = 'app.Client'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases

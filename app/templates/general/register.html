@@ -12,8 +12,7 @@
 
 <body>
 	{% block content %}
-		<form method="post" action="register">
-			{% csrf_token %}
+		<form method="post" action="register"> {% csrf_token %}
 			{% if form.error %}
 				<p class="error"> Sorry, that's not a valid username or password </p>
 			{% endif %}

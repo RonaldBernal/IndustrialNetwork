@@ -280,28 +280,26 @@
                 <div class="col-lg-6 text-center">
                     <h2 class="section-heading">Registro</h2>
                         {% block content %}
-                            <form method="post" action="">
-                                {% csrf_token %}
+                            <form id="reg_form" method="post" action=""> {% csrf_token %}
                                 {% if r_form.error %}
                                     <p class="error"> Error </p>
-                                {% endif %}
-    
+                                {% endif %}    
                                 <div class="row">
                                     <div class="col-md-offset-1 col-md-5">
                                         <div class="form-group">
-                                            {{r_form.name}}
+                                            {{r_form.first_name}}
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
-                                            {{r_form.client_type}}
+                                            {{r_form.last_name}}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-offset-1 col-md-10">
                                         <div class="form-group">
-                                            {{r_form.email}}
+                                            {{r_form.username}}
                                         </div>
                                     </div>
                                 </div>
@@ -317,27 +315,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{r_form.last_login}}
-                                 <script>
-                                    var e = document.getElementById("id_last_login");
-                                    var d = new Date();
-                                    var r = d.getFullYear() + "-" + 
-                                    ("0" + (d.getMonth() + 1)).slice(-2) + "-" + 
-                                    ("0" + d.getDate()).slice(-2) + " " + 
-                                    ("0" + d.getHours()).slice(-2) + ":" + 
-                                    ("0" + d.getMinutes()).slice(-2) +":" + 
-                                    ("0" + d.getSeconds()).slice(-2) + "." + 
-                                    ("000000" + d.getMilliseconds()).slice(-6);
-                                    e.value = r;
-                                </script>
+                                {{r_form.email}}
                                 <div class="row">
                                     <div class="clearfix"></div>
                                     <div class="col-lg-12 text-center">
-                                        <button type="submit" class="btn btn-xl">Registrarse</button>
+                                        <button class="btn btn-xl" onclick="getEmail()">Registrarse</button>
                                     </div>
                                 </div> 
                             </form>
-
                         {% endblock %}
                 </div>
             </div>
@@ -375,6 +360,14 @@
 
     <!-- Custom Theme JavaScript -->
     <script type="text/javascript" src="{% static "landing_page/js/login.js" %}"></script>
+    <script type="text/javascript">
+        function getEmail(){
+            var e = document.getElementById("id_email");
+            var u = document.getElementById("id_username");
+            e.value = u.value;
+            document.getElementById("reg_form").submit();
+        }
+    </script>
 
 </body>
 

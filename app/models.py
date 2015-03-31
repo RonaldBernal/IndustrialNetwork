@@ -1,17 +1,13 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import User
 
 # Create your models here.
-class User(AbstractBaseUser):
-    name = models.CharField(max_length = 100, default='')
-    client_type = models.IntegerField(default = 0)
-    
-    email = models.EmailField(max_length = 100,  unique=True, db_index=True)
-    #joined = models.DateTimeField(auto_now_add=True)
-    is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
+class Client(models.Model):
+    user = models.OneToOneField(User)
 
-    contact = models.CharField(max_length = 100, default='')
+    #custom fields
+    org_name = models.CharField(max_length = 100, default='')
+    client_type = models.IntegerField(default = 0)
     phone = models.CharField(max_length = 10, default='')
     address = models.CharField(max_length = 100, default='')
     description = models.CharField(max_length = 1000, default='')
@@ -19,12 +15,10 @@ class User(AbstractBaseUser):
     vision = models.CharField(max_length = 1000, default='')
     profile_picture = models.ImageField(upload_to = 'app/media/profile_pictures/', default = 'app/media/default/profile_default.png')
 
-    USERNAME_FIELD = 'email'
-
     def __str__(self):
-        return self.name
+        return self.org_name
     def __unicode__(self):
-        return self.name
+        return self.org_name
 
 class Product(models.Model):
     name = models.CharField(max_length = 100)

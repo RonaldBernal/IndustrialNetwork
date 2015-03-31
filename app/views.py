@@ -1,32 +1,41 @@
 from django.shortcuts import render_to_response, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.template import RequestContext, loader
-from datetime import datetime
-from django.contrib.auth import login as django_login, authenticate, logout as django_logout
+from django.contrib.auth import authenticate, login as django_login, logout as django_logout
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
-from app.forms import RegistrationForm, AuthenticationForm, ProductForm
+from app.forms import UserCreateForm, AuthenticationForm, ProductForm
 from app.models import *
 # Create your views here.
 
 def landing(request):
-    if request.method == 'POST':
-        form = RegistrationForm(data=request.POST)
-        if form.is_valid():
-            user = form.save()
-            return redirect('/profile/1')
-        print form.errors
+    form = UserCreateForm()
+    if request.user.is_authenticated():
+        redirect('/profile/')
     else:
-        form = RegistrationForm()
-    
+        if request.method == 'POST':
+            form = UserCreateForm(data=request.POST)
+            if form.is_valid():
+                user = form.save()
+                print user
+                return redirect('/profile/')
+            print form.errors
+        else:
+            form = UserCreateForm()
+        
     return render_to_response('general/landing.html', {
-        'r_form': form,
-    }, context_instance=RequestContext(request))
-    
-def profile(request, id):
+            'r_form': form,
+            "title": "Bienvenido!",
+        }, context_instance=RequestContext(request))
+
+@login_required(login_url='/')
+def profile(request):
     template = loader.get_template('general/profile.html')
+    user_id = request.user.id
     profile_user = None
     try:
-        profile_user = User.objects.get( id=int(id) ) # Url args are string by default
+        profile_user = User.objects.get(pk=user_id) # Url args are string by default
     except Exception, e:
         # If user was not found
         '''
@@ -35,35 +44,36 @@ def profile(request, id):
 
         '''
         return redirect('/')
-
+    '''
     data = RequestContext(request, {
         "user_id": request.user.id,
-        "name" : profile_user.name,
-        "contact" : profile_user.contact,
-        "phone" : profile_user.phone,
-        "address" : profile_user.address,
-        "description" : profile_user.description,
-        "mision" : profile_user.mision,
-        "vision" : profile_user.vision
+        "name" : profile_user.client.name,
+        "contact" : profile_user.client.contact,
+        "phone" : profile_user.client.phone,
+        "address" : profile_user.client.address,
+        "description" : profile_user.client.description,
+        "mision" : profile_user.client.mision,
+        "vision" : profile_user.client.vision
     })
-
+    '''
     context = RequestContext(request)
     if request.method == 'POST':
         form = ProductForm(request.POST)
-        if form.is_valid():
-            data["form"] = ProductForm()
-            form.save(commit=True)
-            return render_to_response('general/profile.html', data, context)
-        else:
+        #if form.is_valid():
+            #data["form"] = ProductForm()
+            #form.save(commit=True)
+            #return render_to_response('general/profile.html', data, context)
+        #else:
             # The supplied form contained errors - just print them to the terminal.
-            data["form"] = form
-            print form.errors
-    else:
-        data["form"] = ProductForm()
+            #data["form"] = form
+            #print form.errors
+    #else:
+        #data["form"] = ProductForm()
 
     
-    return render_to_response('general/profile.html', data, context)
+    return render_to_response('general/profile.html', context) ##add data
 
+@login_required(login_url='/')
 def new_product(request):
     context = RequestContext(request)
     if request.method == 'POST':
@@ -79,12 +89,13 @@ def new_product(request):
     else:
         template = loader.get_template('products/new.html')
         context = RequestContext(request, {
-            "title": "Bienvenido!"
+            "title": "Registro de Productos"
             #"year" : now
         })
         form = ProductForm()
     return render_to_response('products/new.html', {'form': form}, context)
 
+@login_required(login_url='/')
 def product(request, id_product):
     template = loader.get_template('products/detail.html')
     context = RequestContext(request, {
@@ -97,11 +108,18 @@ def login(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
-            user = authenticate(email=request.POST['email'], password=request.POST['password'])
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
             if user is not None:
                 if user.is_active:
                     django_login(request, user)
-                    return redirect('/profile/1/')
+                    return redirect('/profile/')
+                else:
+                    print("The password is valid, but the account has been disabled!")
+            else:
+                # the authentication system was unable to verify the username and password
+                print("The username and password were incorrect.")
     else:
         form = AuthenticationForm()
     return render_to_response('general/login.html', {
@@ -110,12 +128,12 @@ def login(request):
 
 def register(request):
     if request.method == 'POST':
-        form = RegistrationForm(data=request.POST)
+        form = UserCreateForm(data=request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect('/profile/1/')
+            return redirect('/profile//')
     else:
-        form = RegistrationForm()
+        form = UserCreateForm()
     return render_to_response('general/register.html', {
         'form': form,
     }, context_instance=RequestContext(request))
