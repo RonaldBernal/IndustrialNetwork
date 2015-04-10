@@ -28,7 +28,6 @@
 </head>
 
 <body id="page-top" class="index">
-
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -255,7 +254,7 @@
                 	<div class="col-lg-6 text-center login-border">
                         <h2 class="section-heading">Iniciar Sesión</h2>
                         <form id="lgin_form" method="post" action="/login/"> {% csrf_token %}
-                            {% if r_form.error %}
+                            {% if l_form.error %}
                                 <p class="error"> Error </p>
                             {% endif %}
                             <div class="row login-space">
@@ -365,13 +364,15 @@
     <script type="text/javascript" src="{% static "landing_page/js/login.js" %}"></script>
     <script type="text/javascript">
         function getEmail(){
-            var e = document.getElementById("id_email");
-            var u = document.getElementById("id_username");
+            var u = document.getElementById("register_id_username");
+            var e = document.getElementById("register_id_email");
             e.value = u.value;
+            
+            alert("username: " + u.value + "\nemail: " + e.value);
+
             document.getElementById("reg_form").submit();
         }
     </script>
-
 </body>
 
 </html>

@@ -14,7 +14,7 @@
 	{% block content %}
 		<form method="post" action="register"> {% csrf_token %}
 			{% if form.error %}
-				<p class="error"> Sorry, that's not a valid username or password </p>
+				<p class="error"> Sorry, that's not valid information </p>
 			{% endif %}
 
 			{{ form.as_table }}

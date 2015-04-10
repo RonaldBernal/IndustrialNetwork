@@ -12,8 +12,8 @@ from app.models import *
 
 @csrf_protect
 def landing(request):
-    r_form = UserCreateForm()
-    l_form = AuthenticationForm()
+    r_form = UserCreateForm(auto_id='register_id_%s')
+    l_form = AuthenticationForm(auto_id='login_id_%s')
     if request.user.is_authenticated():
         redirect('/profile/')
     else:
