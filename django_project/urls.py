@@ -9,7 +9,8 @@ urlpatterns = patterns('',
 
     # core url
     url(r'^$', 'app.views.landing', name ='landing'),
-    url(r'^profile/', 'app.views.profile', name = 'profile'),
+    url(r'^profile/$', 'app.views.profile', name = 'profile'),
+    url(r'^profile/update$', 'app.views.profile_update', name = 'profile_update'),
     url(r'^product/(\d+)', 'app.views.product', name='product'),
     url(r'^product/new$', 'app.views.new_product', name='product'),
     

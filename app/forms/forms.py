@@ -3,7 +3,7 @@ from django import forms
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-#from app.models import Client
+from app.models import Client
 
 class UserCreateForm(forms.ModelForm):
     username = forms.EmailField(
@@ -99,18 +99,60 @@ class AuthenticationForm(forms.Form):
     class Meta:
         fields = ['username', 'password']
 
-'''
-class ClientRegistrationForm(forms.ModelForm):
-
+class UserUpdateForm(forms.ModelForm):
     CLIENTS = (
         (0, 'Fábrica'),
         (1, 'Distribuidora'),
         (2, 'Cliente final'),
     )
+    user_id = forms.IntegerField(
+        required=True,
+        widget=forms.HiddenInput(
+                attrs={'class':'form-control', 'value':'USER_ID'}
+            )
+        )
 
-    client_type = forms.ChoiceField(label='Tipo de Cliente', choices=CLIENTS, widget=forms.Select(attrs={'class':'form-control'}))
-    
+    client_type = forms.ChoiceField(label='Tipo de Cliente', choices=CLIENTS, widget=forms.Select(attrs={'class':'ui dropdown'}))
+    phone = forms.CharField(
+        required=False, 
+        widget=forms.TextInput(
+            attrs={'class':'form-control', 'placeholder':'Teléfono'}
+            )
+        )
+    address = forms.CharField(
+        required=False, 
+        widget=forms.TextInput(
+            attrs={'class':'form-control', 'placeholder':'Dirección'}
+            )
+        )
+    description = forms.CharField(
+        required=False, 
+        widget=forms.Textarea(
+            attrs={'class':'form-control', 'placeholder':'descripción'}
+            )
+        )
+
+    mision = forms.CharField(
+        required=False, 
+        widget=forms.Textarea(
+            attrs={'class':'form-control', 'placeholder':'Misión'}
+            )
+        )
+
+    vision = forms.CharField(
+        required=False, 
+        widget=forms.Textarea(
+            attrs={'class':'form-control', 'placeholder':'Visión'}
+            )
+        )
+
     class Meta:
         model = Client
-        fields = ['client_type']
-'''
+        fields = ("user_id", "client_type", "phone", "address", "description", "mision", "vision")
+
+    def save(self, commit=True):
+        client = super(UserUpdateForm, self).save(commit=False)
+        client.user_id = self.cleaned_data["user_id"]
+        if commit:
+            client.save()
+        return client

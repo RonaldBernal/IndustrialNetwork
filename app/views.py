@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.views.decorators.csrf import csrf_protect
-from app.forms import UserCreateForm, AuthenticationForm, ProductForm
+from app.forms import *
 from app.models import *
 # Create your views here.
 
@@ -33,7 +33,6 @@ def profile(request):
     profile_user = None
     profile_user = User.objects.get(pk = user_id)
     
-    
     dictionary = RequestContext(request, {
         "user_id": user_id,
         #"name" : profile_user.client.name,
@@ -44,7 +43,6 @@ def profile(request):
         #"mision" : profile_user.client.mision,
         #"vision" : profile_user.client.vision
     })
-    
     
     context = RequestContext(request)
     if request.method == 'POST':
@@ -61,6 +59,25 @@ def profile(request):
         dictionary["form"] = ProductForm()
     
     return render_to_response('general/profile.html', dictionary) #, context)
+
+@login_required(login_url = '/')
+@csrf_protect
+def profile_update(request):
+    print "USER_ID: " + str(request.user.id)
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST)
+        #print form
+        if form.is_valid():
+            form.save(commit = True)
+            return redirect('/profile/')
+        else:
+            # The supplied form contained errors - just print them to the terminal.
+            print form.errors
+            return redirect('/profile/update')
+    else:
+        dictionary = RequestContext(request, {})
+        dictionary["form"] = UserUpdateForm(initial={'user_id': request.user.id})
+        return render_to_response('general/profile_update.html', dictionary)
 
 @login_required(login_url='/')
 @csrf_protect
