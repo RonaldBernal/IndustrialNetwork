@@ -106,13 +106,17 @@ class UserUpdateForm(forms.ModelForm):
         (2, 'Cliente final'),
     )
     user_id = forms.IntegerField(
-        required=True,
-        widget=forms.HiddenInput(
-                attrs={'class':'form-control', 'value':'USER_ID'}
-            )
+            required=True,
+            widget=forms.HiddenInput()
         )
 
-    client_type = forms.ChoiceField(label='Tipo de Cliente', choices=CLIENTS, widget=forms.Select(attrs={'class':'ui dropdown'}))
+    client_type = forms.ChoiceField(
+            label='Tipo de Cliente', 
+            choices=CLIENTS, 
+            widget=forms.Select( 
+                    attrs={'class':'ui dropdown'}
+                )
+        )
     phone = forms.CharField(
         required=False, 
         widget=forms.TextInput(

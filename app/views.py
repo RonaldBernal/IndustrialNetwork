@@ -63,15 +63,12 @@ def profile(request):
 @login_required(login_url = '/')
 @csrf_protect
 def profile_update(request):
-    print "USER_ID: " + str(request.user.id)
     if request.method == 'POST':
         form = UserUpdateForm(request.POST)
-        #print form
         if form.is_valid():
             form.save(commit = True)
             return redirect('/profile/')
         else:
-            # The supplied form contained errors - just print them to the terminal.
             print form.errors
             return redirect('/profile/update')
     else:
@@ -87,17 +84,13 @@ def new_product(request):
         form = ProductForm(request.POST)
         if form.is_valid():
             form.save(commit = True)
-            # Now call the index() view.
-            # The user will be shown the homepage.
             return landing(request)
         else:
-            # The supplied form contained errors - just print them to the terminal.
             print form.errors
     else:
         template = loader.get_template('products/new.html')
         context = RequestContext(request, {
             "title": "Registro de Productos"
-            #"year" : now
         })
         form = ProductForm()
     return render_to_response('products/new.html', {'form': form}, context)
