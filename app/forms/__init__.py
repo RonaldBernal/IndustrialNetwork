@@ -1,2 +1,2 @@
-from forms import UserCreateForm, AuthenticationForm, UserUpdateForm
+from forms import *
 from product import ProductForm

@@ -63,58 +63,81 @@
    </div>
    <!-- navbar ends -->
    <div class="container">
-      <div class="ten wide column">
+      <div class="doubling row">
          {% block content %}
-            <form class="ui form" id="product_form" method="post" action="">
-               {% csrf_token %}
-               <h4 class="ui dividing header">Información del producto</h4>
-               <div class="form-segment">
-                  {{form.user_id}}
-                  <div class="required field">
-                     <label>Nombre del producto</label>
-                     <div class="ui icon input">
-                        {{form.client_type}}
+            <div class="ui info message">
+               <i class="close icon"></i>
+               <div class="header">
+                  Completa tu perfil
+               </div>
+               <p>Sólo los campos con * son necesarios. Sin embargo se recomienda no dejar ninguno en blanco.</p>
+            </div>
+            <form class="ui form segment" id="update_form" enctype="multipart/form-data" method="post" action=""> {% csrf_token %}
+               <h3 class="ui dividing header">Acualización de perfil</h3>
+               <div class="ui divided middle aligned grid">
+                  <div class="four wide column">
+                     <div class="ui piled segment">
+                        <img id="imagePreview" class="ui centered small image" src="{% static "assets/img/image-square.png" %}">
+                     </div>
+                     <div class="ui five column equal height grid">
+                        <div class="column">
+                           <div class="ui icon button" onclick="chooseFile();">
+                              <i class="big add circle icon"></i>
+                           </div>
+                           <div style="height:0px;overflow:hidden">
+                              {{form.profile_picture}}
+                           </div>
+                        </div>
                      </div>
                   </div>
-               </div>
-               <div class="form-segment">
-                  <div class="required field">
-                     <label>Teléfono</label>
-                     <div class="ui icon input">
-                        {{form.phone}}
-                        
+                  <div class="twelve wide column"> 
+                     {{form.user_id}}
+                     {% if form.errors %}
+                        <div class="error">
+                           <p><span>ERROR</span></p>
+                           <ul>
+                              {% for key,value in form.errors %}
+                                 {% for error in value %}
+                                    <li>{{ error }}</li>
+                                 {% endfor %}
+                              {% endfor %}
+                           </ul>
+                        </div>
+                     {% endif %}
+                     <div class="three fields">
+                        <div class="required field">
+                           <label>Nombre de la empresa</label>
+                           {{form.org_name}}
+                        </div>
+                        <div class="required field">
+                           <label>Teléfono</label>
+                           {{form.phone}}
+                        </div>
+                        <div class="required field">
+                           <label>Tipo dde Cliente</label>
+                           {{form.client_type}}
+                        </div>
                      </div>
-                  </div>
-               </div>
-               <div class="form-segment">
-                  <div class="required field">
-                     <label>Dirección</label>
-                     <div class="ui icon input">
+                     <div class="field">
+                        <label>Dirección</label>
                         {{form.address}}
-                        
+                     </div>
+                     <div class="three fields">
+                        <div class="field">
+                           <label>Descripción</label>
+                           {{form.description}}
+                        </div>
+                        <div class="field">
+                           <label>Misión</label>
+                           {{form.mision}}
+                        </div>
+                        <div class="field">
+                           <label>Vision</label>
+                           {{form.vision}}
+                        </div>
+                        <button type ="submit" class="ui right floated button primary">Guardar</button>
                      </div>
                   </div>
-               </div>
-               <div class="form-segment">
-                  <div class="required field">
-                     <label>Descripción</label>
-                        {{form.description}}
-                  </div>
-               </div>
-               <div class="two fields">
-                  <div class="form-segment">
-                     <div class="required field">
-                        <label>Misión</label>
-                        {{form.mision}}
-                     </div>
-                  </div>
-                  <div class="form-segment">
-                     <div class="required field">
-                        <label>Vision</label>
-                        {{form.vision}}
-                     </div>
-                  </div>
-                  <button class="ui button primary">Guardar</button>
                </div>
             </form>
          {% endblock %}
@@ -143,6 +166,18 @@
    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
    <script type="text/javascript" src="{% static "assets/js/semantic.js" %}"></script>
    <script type="text/javascript" src="{% static "assets/js/custom.js" %}"></script>
+   <script>
+      function chooseFile() {
+         document.getElementById("id_profile_picture").click();
+      }
+      function PreviewImage() {
+         var oFReader = new FileReader();
+         oFReader.readAsDataURL(document.getElementById("id_profile_picture").files[0]);
 
+         oFReader.onload = function (oFREvent) {
+            document.getElementById("imagePreview").src = oFREvent.target.result;
+         };
+      };
+   </script>
 </body>
 </html>

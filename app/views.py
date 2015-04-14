@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login as django_login, logout as d
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
+from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_protect
 from app.forms import *
 from app.models import *
@@ -30,51 +31,54 @@ def landing(request):
 def profile(request):
     template = loader.get_template('general/profile.html')
     user_id = request.user.id
-    profile_user = None
     profile_user = User.objects.get(pk = user_id)
-    
-    dictionary = RequestContext(request, {
-        "user_id": user_id,
-        #"name" : profile_user.client.name,
-        "contact" : profile_user.get_full_name(),
-        #"phone" : profile_user.client.phone,
-        #"address" : profile_user.client.address,
-        #"description" : profile_user.client.description,
-        #"mision" : profile_user.client.mision,
-        #"vision" : profile_user.client.vision
-    })
-    
-    context = RequestContext(request)
-    if request.method == 'POST':
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            dictionary["form"] = ProductForm()
-            form.save(commit = True)
-            return render_to_response('general/profile.html', dictionary, context)
+    try:
+        client = Client.objects.get(pk = user_id)
+        dictionary = RequestContext(request, {
+            "user_id":          user_id,
+            "profile_picture":  client.profile_picture,
+            "org_name" :        client.org_name,
+            "contact" :         profile_user.get_full_name(),
+            "phone" :           client.phone,
+            "address" :         client.address,
+            "description" :     profile_user.client.description,
+            "mision" :          profile_user.client.mision,
+            "vision" :          profile_user.client.vision
+        })
+        
+        context = RequestContext(request)
+        if request.method == 'POST':
+            form = ProductForm(request.POST)
+            if form.is_valid():
+                dictionary["form"] = ProductForm()
+                form.save(commit = True)
+                return render_to_response('general/profile.html', dictionary, context)
+            else:
+                #The supplied form contained errors - just print them to the terminal.
+                dictionary["form"] = form
+                print form.errors
         else:
-            #The supplied form contained errors - just print them to the terminal.
-            dictionary["form"] = form
-            print form.errors
-    else:
-        dictionary["form"] = ProductForm()
-    
-    return render_to_response('general/profile.html', dictionary) #, context)
+            dictionary["form"] = ProductForm()
+        
+        return render_to_response('general/profile.html', dictionary) #, context)
+    except ObjectDoesNotExist:
+        return redirect('/profile/update')
 
 @login_required(login_url = '/')
 @csrf_protect
 def profile_update(request):
     if request.method == 'POST':
-        form = UserUpdateForm(request.POST)
+        form = UserUpdateForm(request.POST, request.FILES)
         if form.is_valid():
             form.save(commit = True)
             return redirect('/profile/')
         else:
             print form.errors
             return redirect('/profile/update')
-    else:
-        dictionary = RequestContext(request, {})
-        dictionary["form"] = UserUpdateForm(initial={'user_id': request.user.id})
-        return render_to_response('general/profile_update.html', dictionary)
+    
+    dictionary = RequestContext(request, {})
+    dictionary["form"] = UserUpdateForm(initial={'user_id': request.user.id})
+    return render_to_response('general/profile_update.html', dictionary)
 
 @login_required(login_url='/')
 @csrf_protect
@@ -121,7 +125,7 @@ def register(request):
                                 password=request.POST.get('password1', ''))
             # log in user
             django_login(request, user)
-            return redirect('/profile/')
+            return redirect('/profile/update')
         print form.errors
     return redirect('/')
 

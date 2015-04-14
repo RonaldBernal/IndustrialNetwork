@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Client(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, primary_key=True)
 
     #custom fields
     org_name = models.CharField(max_length = 100, default='')

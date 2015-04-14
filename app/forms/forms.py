@@ -10,37 +10,37 @@ class UserCreateForm(forms.ModelForm):
         required=True, 
         widget=forms.TextInput(
             attrs={'class':'form-control', 'placeholder':'Correo electrónico'}
-            )
         )
+    )
     first_name = forms.CharField(
         required=True, 
         widget=forms.TextInput(
             attrs={'class':'form-control', 'placeholder':'Nombre del encargado'}
-            )
         )
+    )
     last_name = forms.CharField(
         required=True, 
         widget=forms.TextInput(
             attrs={'class':'form-control', 'placeholder':'Apellido del encargado'}
-            )
         )
+    )
     password1 = forms.CharField(
         required=True, 
         widget=forms.PasswordInput(
             attrs={'class':'form-control', 'placeholder':'Contraseña'}
-            )
         )
+    )
     password2 = forms.CharField(
         required=True, 
         widget=forms.PasswordInput(
             attrs={'class':'form-control', 'placeholder':'Confirmar contraseña'}
-            )
         )
+    )
     email = forms.EmailField(
         required=True, 
         widget=forms.HiddenInput(attrs={'value':''}
-            )
         )
+    )
 
     class Meta:
         model = User
@@ -87,14 +87,14 @@ class AuthenticationForm(forms.Form):
         required=True, 
         widget=forms.TextInput(
             attrs={'class':'form-control', 'placeholder':'Correo electrónico'}
-            )
         )
+    )
     password = forms.CharField(
         required=True, 
         widget=forms.PasswordInput(
             attrs={'class':'form-control', 'placeholder':'Contraseña'}
-            )
         )
+    )
 
     class Meta:
         fields = ['username', 'password']
@@ -106,20 +106,32 @@ class UserUpdateForm(forms.ModelForm):
         (2, 'Cliente final'),
     )
     user_id = forms.IntegerField(
-            required=True,
-            widget=forms.HiddenInput()
-        )
-
+        required=True,
+        widget=forms.HiddenInput()
+    )
     client_type = forms.ChoiceField(
-            label='Tipo de Cliente', 
-            choices=CLIENTS, 
-            widget=forms.Select( 
-                    attrs={'class':'ui dropdown'}
-                )
+        required=True,
+        label='Tipo de Cliente', 
+        choices=CLIENTS, 
+        widget=forms.Select( 
+                attrs={'class':'ui dropdown'}
+            )
+    )
+    profile_picture = forms.FileField(
+        required = False,
+        widget = forms.FileInput(
+            attrs = {'name':'profile_picture', 'onchange':'PreviewImage();'}
+            )
+    )
+    org_name = forms.CharField(
+        required=True, 
+        widget=forms.TextInput(
+            attrs={'class':'form-control', 'placeholder':'Nombre de la empresa'}
+            )
         )
     phone = forms.CharField(
         required=False, 
-        widget=forms.TextInput(
+        widget=forms.NumberInput(
             attrs={'class':'form-control', 'placeholder':'Teléfono'}
             )
         )
@@ -132,7 +144,7 @@ class UserUpdateForm(forms.ModelForm):
     description = forms.CharField(
         required=False, 
         widget=forms.Textarea(
-            attrs={'class':'form-control', 'placeholder':'descripción'}
+            attrs={'class':'form-control', 'placeholder':'Descripción'}
             )
         )
 
@@ -152,7 +164,7 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Client
-        fields = ("user_id", "client_type", "phone", "address", "description", "mision", "vision")
+        fields = ("user_id", "client_type", "profile_picture", "org_name", "phone", "address", "description", "mision", "vision")
 
     def save(self, commit=True):
         client = super(UserUpdateForm, self).save(commit=False)

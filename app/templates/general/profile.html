@@ -67,7 +67,9 @@
       <div class="ui middle aligned grid">
          <div class="doubling row">
             <div class="three wide column">
-               <img class="ui medium bordered image" src="{% static "assets/img/white-image.png" %}">
+               <div class="ui fluid piled segment">
+                  <img class="ui medium bordered image" src="{{MEDIA_URL}}{{profile_picture}}">
+               </div>
             </div>
             <div class="thirteen wide column">
                <h3 class="ui top attached center aligned header">Información General</h3>
@@ -79,7 +81,7 @@
                               <h4>
                                  <i class="circle thin icon"></i>Nombre:
                               </h4>
-                              <!--{{profile.name}}-->
+                              {{org_name}}
                               <h4>
                                  <i class="user icon"></i>Contacto: 
                               </h4>
@@ -87,11 +89,11 @@
                               <h4>
                                  <i class="call icon"></i>Teléfono: 
                               </h4>
-                              <!--{{profile.phone}}-->
+                              {{phone}}
                               <h4>
                                  <i class="marker icon"></i>Ubicación: 
                               </h4>
-                              <!--{{profile.address}}-->
+                              {{address}}
 
                            </div>
                         </div>
@@ -99,12 +101,14 @@
                      <div class="column">
                         <div class="ui horizontal segment">
                            <h3 class="about ui header center aligned">Acerca de nosotros</h3>
-                           <h4 class="about ui header">Descripción:</h4>
-                           <!--<p>{{profile.description}}</p>-->
-                           <h4 class="ui header">Misión:</h4>
-                           <!--<p>{{profile.mision}}</p>-->
-                           <h4 class="ui header">Visión:</h4>
-                           <!--<p>{{profile.vision}}</p>-->
+                           <div class="info">
+                              <h4 class="about ui header">Descripción:</h4>
+                              {{description}}
+                              <h4 class="ui header">Misión:</h4>
+                              {{mision}}
+                              <h4 class="ui header">Visión:</h4>
+                              {{vision}}
+                           </div>
                         </div>
                      </div>
                   </div>
@@ -302,41 +306,33 @@
                   <form class="ui form" id="product_form" method="post" action="/profile/1">
                      {% csrf_token %}
                      <h4 class="ui dividing header">Información del producto</h4>
-                     <div class="form-segment">
-                        <div class="required field">
-                           <label>Nombre del producto</label>
-                           <div class="ui icon input">
-                              {{form.name}}
-                              <i class="write icon"></i>
-                           </div>
+                     <div class="required field">
+                        <label>Nombre del producto</label>
+                        <div class="ui icon input">
+                           {{form.name}}
+                           <i class="write icon"></i>
                         </div>
                      </div>
-                     <div class="form-segment">
-                        <div class="required field">
-                           <label>Descripción del producto</label>
-                           <div class="ui icon input">
-                              {{form.description}}
-                              <i class="write icon"></i>
-                           </div>
+                     <div class="required field">
+                        <label>Descripción del producto</label>
+                        <div class="ui icon input">
+                           {{form.description}}
+                           <i class="write icon"></i>
                         </div>
                      </div>
                      <div class="two fields">
-                        <div class="form-segment">
-                           <div class="required field">
-                              <label>Cantidad Mínima de venta</label>
-                              <div class="ui icon input">
-                                 {{form.minimum_sale}}
-                                 <i class="tag icon"></i>
-                              </div>
+                        <div class="required field">
+                           <label>Cantidad Mínima de venta</label>
+                           <div class="ui icon input">
+                              {{form.minimum_sale}}
+                              <i class="tag icon"></i>
                            </div>
                         </div>
-                        <div class="form-segment">
-                           <div class="required field">
-                              <label>Precio por unidad</label>
-                              <div class="ui icon input">
-                                 {{form.unit_price}}
-                                 <i class="dollar icon"></i>
-                              </div>
+                        <div class="required field">
+                           <label>Precio por unidad</label>
+                           <div class="ui icon input">
+                              {{form.unit_price}}
+                              <i class="dollar icon"></i>
                            </div>
                         </div>
                      </div>
@@ -349,7 +345,8 @@
          <div class="ui red button">
             Cancelar
          </div>
-         <button class="ui positive right labeled icon button" onclick="document.getElementById('product_form').submit(); return false;">
+         <button class="ui positive right labeled icon button" 
+               onclick="document.getElementById('product_form').submit(); return false;">
             Agregar producto
             <i class="checkmark icon"></i>
          </button>
