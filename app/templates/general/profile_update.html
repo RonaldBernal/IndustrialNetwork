@@ -1,171 +1,94 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-   <!-- Standard Meta -->
-   <meta charset="utf-8" />
-   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-   <meta name="description" content="Login and Register page">
-   <meta name="author" content="Ronald Bernal y Antonio Hernández">
+{% extends "base.html" %}
+{% load staticfiles %}
 
-   <!-- Site Properities -->
+{% block head %}
+   <meta name="description" content="Profile Update page">
    <title>{{title}}</title>
+{% endblock head %}
 
-   {% load staticfiles %}
-   <!-- Semantic UI Core CSS -->
-   <link rel="stylesheet" type="text/css" href="{% static "assets/css/semantic.css" %}">
-   <!-- Custom CSS -->
-   <link rel="stylesheet" type="text/css" href="{% static "assets/css/custom/home.css" %}">
-   <!-- Custom Fonts -->
-   <link rel="stylesheet" type="text/css" href='http://fonts.googleapis.com/css?family=Kaushan+Script'>
-</head>
-
-<body>
-   <!-- navbar begins -->
-   <div class="navbar">
-      <div class="ui inverted large menu">
-         <div class="left menu">
-            <a class="brand item">
-               <i class="settings icon"></i>Industrial Network
-            </a>
-            <a href="/profile/" class="active yellow item">
-               <img class="ui navbarimg left floated avatar image" src="{% static "assets/img/white-image.png" %}">
-               Perfil
-            </a>
-         </div>
-         <div class="right menu">
-            <div class="item">
-               <div class="ui action left icon input">
-                  <i class="search icon"></i>
-                  <input type="text" placeholder="Buscar...">
-               </div>
-            </div>
-            <a href="/messages/" class="item">
-               <i class="comments outline icon"></i> Mensajes
-            </a>
-            <a class="blue item">
-               <i class="users icon"></i> Contactos
-            </a>
-            <!-- dropdown begins-->
-            <div class="ui dropdown item">
-               <i class="left options icon"></i>
-               Opciones
-               <i class="dropdown icon"></i>
-               <div class="menu">
-                  <a class="item">Privacidad</a>
-                  <a class="item">Pagos</a>
-                  <a class="item" href="/logout">Cerrar Sesión</a>
-               </div>
-            </div>
-            <!-- dropdown ends-->
-         </div>
-      </div>
-   </div>
-   <!-- navbar ends -->
+{% block content %}
    <div class="container">
       <div class="doubling row">
-         {% block content %}
-            <div class="ui info message">
-               <i class="close icon"></i>
-               <div class="header">
-                  Completa tu perfil
-               </div>
-               <p>Sólo los campos con * son necesarios. Sin embargo se recomienda no dejar ninguno en blanco.</p>
+         <div class="ui info message">
+            <i class="close icon"></i>
+            <div class="header">
+               Completa tu perfil
             </div>
-            <form class="ui form segment" id="update_form" enctype="multipart/form-data" method="post" action=""> {% csrf_token %}
-               <h3 class="ui dividing header">Acualización de perfil</h3>
-               <div class="ui divided middle aligned grid">
-                  <div class="four wide column">
-                     <div class="ui piled segment">
-                        <img id="imagePreview" class="ui centered small image" src="{% static "assets/img/image-square.png" %}">
-                     </div>
-                     <div class="ui five column equal height grid">
-                        <div class="column">
-                           <div class="ui icon button" onclick="chooseFile();">
-                              <i class="big add circle icon"></i>
-                           </div>
-                           <div style="height:0px;overflow:hidden">
-                              {{form.profile_picture}}
-                           </div>
+            <p>Sólo los campos con * son necesarios. Sin embargo se recomienda no dejar ninguno en blanco.</p>
+         </div>
+         <form class="ui form segment" id="update_form" enctype="multipart/form-data" method="post" action=""> {% csrf_token %}
+            <h3 class="ui dividing header">Acualización de perfil</h3>
+            <div class="ui divided middle aligned grid">
+               <div class="four wide column">
+                  <div class="ui piled segment">
+                     <img id="imagePreview" class="ui centered small image" src="{% static "assets/img/image-square.png" %}">
+                  </div>
+                  <div class="ui five column equal height grid">
+                     <div class="column">
+                        <div class="ui icon button" onclick="chooseFile();">
+                           <i class="big add circle icon"></i>
+                        </div>
+                        <div style="height:0px;overflow:hidden">
+                           {{form.profile_picture}}
                         </div>
                      </div>
                   </div>
-                  <div class="twelve wide column"> 
-                     {{form.user_id}}
-                     {% if form.errors %}
-                        <div class="error">
-                           <p><span>ERROR</span></p>
-                           <ul>
-                              {% for key,value in form.errors %}
-                                 {% for error in value %}
-                                    <li>{{ error }}</li>
-                                 {% endfor %}
+               </div>
+               <div class="twelve wide column"> 
+                  {{form.user_id}}
+                  {% if form.errors %}
+                     <div class="error">
+                        <p><span>ERROR</span></p>
+                        <ul>
+                           {% for key,value in form.errors %}
+                              {% for error in value %}
+                                 <li>{{ error }}</li>
                               {% endfor %}
-                           </ul>
-                        </div>
-                     {% endif %}
-                     <div class="three fields">
-                        <div class="required field">
-                           <label>Nombre de la empresa</label>
-                           {{form.org_name}}
-                        </div>
-                        <div class="required field">
-                           <label>Teléfono</label>
-                           {{form.phone}}
-                        </div>
-                        <div class="required field">
-                           <label>Tipo dde Cliente</label>
-                           {{form.client_type}}
-                        </div>
+                           {% endfor %}
+                        </ul>
+                     </div>
+                  {% endif %}
+                  <div class="three fields">
+                     <div class="required field">
+                        <label>Nombre de la empresa</label>
+                        {{form.org_name}}
+                     </div>
+                     <div class="required field">
+                        <label>Teléfono</label>
+                        {{form.phone}}
+                     </div>
+                     <div class="required field">
+                        <label>Tipo dde Cliente</label>
+                        {{form.client_type}}
+                     </div>
+                  </div>
+                  <div class="field">
+                     <label>Dirección</label>
+                     {{form.address}}
+                  </div>
+                  <div class="three fields">
+                     <div class="field">
+                        <label>Descripción</label>
+                        {{form.description}}
                      </div>
                      <div class="field">
-                        <label>Dirección</label>
-                        {{form.address}}
+                        <label>Misión</label>
+                        {{form.mision}}
                      </div>
-                     <div class="three fields">
-                        <div class="field">
-                           <label>Descripción</label>
-                           {{form.description}}
-                        </div>
-                        <div class="field">
-                           <label>Misión</label>
-                           {{form.mision}}
-                        </div>
-                        <div class="field">
-                           <label>Vision</label>
-                           {{form.vision}}
-                        </div>
-                        <button type ="submit" class="ui right floated button primary">Guardar</button>
+                     <div class="field">
+                        <label>Vision</label>
+                        {{form.vision}}
                      </div>
-                  </div>
-               </div>
-            </form>
-         {% endblock %}
-      </div>
-   </div>
-   <div class="ui footer divider"></div>
-   <footer>
-        <div class="container">
-            <div class="ui two column grid">
-               <div class="left floated column">
-                  <span class="copyright">Marca Registrada &reg; 2015</span>
-               </div>
-               <div class="right floated right aligned column">
-                  <div class="ui horizontal link list">
-                     <a class="item" href="#">Política de Privacidad</a>
-                     <a class="item" href="#">Términos de uso</a>
+                     <button type ="submit" class="ui right floated button primary">Guardar</button>
                   </div>
                </div>
             </div>
-        </div>
-    </footer>
+         </form>
+      </div>
+   </div>
+{% endblock content %}
 
-   <script type="text/javascript" src="{% static "assets/js/jquery.js" %}"></script>
-
-   <!-- Used with Tab History !-->
-   <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
-   <script type="text/javascript" src="{% static "assets/js/semantic.js" %}"></script>
-   <script type="text/javascript" src="{% static "assets/js/custom.js" %}"></script>
+{% block scripts %}
    <script>
       function chooseFile() {
          document.getElementById("id_profile_picture").click();
@@ -179,5 +102,4 @@
          };
       };
    </script>
-</body>
-</html>
+{% endblock scripts %}

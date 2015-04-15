@@ -5,7 +5,30 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from app.models import Client
 
+class AuthenticationForm(forms.Form):
+    """
+    Login Form
+    """
+    username = forms.EmailField(
+        required=True, 
+        widget=forms.TextInput(
+            attrs={'class':'form-control', 'placeholder':'Correo electrónico'}
+        )
+    )
+    password = forms.CharField(
+        required=True, 
+        widget=forms.PasswordInput(
+            attrs={'class':'form-control', 'placeholder':'Contraseña'}
+        )
+    )
+
+    class Meta:
+        fields = ['username', 'password']
+
 class UserCreateForm(forms.ModelForm):
+    """
+    Register Form
+    """
     username = forms.EmailField(
         required=True, 
         widget=forms.TextInput(
@@ -79,27 +102,10 @@ class UserCreateForm(forms.ModelForm):
             user.save()
         return user
 
-class AuthenticationForm(forms.Form):
-    """
-    Login form
-    """
-    username = forms.EmailField(
-        required=True, 
-        widget=forms.TextInput(
-            attrs={'class':'form-control', 'placeholder':'Correo electrónico'}
-        )
-    )
-    password = forms.CharField(
-        required=True, 
-        widget=forms.PasswordInput(
-            attrs={'class':'form-control', 'placeholder':'Contraseña'}
-        )
-    )
-
-    class Meta:
-        fields = ['username', 'password']
-
 class UserUpdateForm(forms.ModelForm):
+    """
+    Client Update Form
+    """
     CLIENTS = (
         (0, 'Fábrica'),
         (1, 'Distribuidora'),

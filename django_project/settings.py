@@ -62,7 +62,6 @@ DATABASES = {
         
         'ENGINE': 'mysql.connector.django',
         #'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        #'ENGINE': '',
         'NAME': 'industrial_network',
         'USER': 'django',
         'PASSWORD': 'xlSR0bCt4h',

@@ -1,4 +1,5 @@
-from django.shortcuts import render_to_response, redirect
+# -*- coding: utf-8 -*-
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
@@ -9,7 +10,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.csrf import csrf_protect
 from app.forms import *
 from app.models import *
-# Create your views here.
 
 @csrf_protect
 def landing(request):
@@ -20,22 +20,23 @@ def landing(request):
     else:
         if request.method == 'POST':
             print "Its posting something"
-    return render_to_response('general/landing.html', {
+    return render(request, 'general/landing.html', {
             'r_form': r_form,
             'l_form': l_form,
             "title": "Bienvenido!",
-        }, context_instance = RequestContext(request))
+        })
 
 @login_required(login_url = '/')
 @csrf_protect
 def profile(request):
-    template = loader.get_template('general/profile.html')
-    user_id = request.user.id
-    profile_user = User.objects.get(pk = user_id)
     try:
+        template = loader.get_template('general/profile.html')
+        user_id = request.user.id
+        profile_user = User.objects.get(pk = user_id)
         client = Client.objects.get(pk = user_id)
-        dictionary = RequestContext(request, {
+        dictionary = {
             "user_id":          user_id,
+            "title":            "Perfil de " + client.org_name,
             "profile_picture":  client.profile_picture,
             "org_name" :        client.org_name,
             "contact" :         profile_user.get_full_name(),
@@ -43,16 +44,19 @@ def profile(request):
             "address" :         client.address,
             "description" :     profile_user.client.description,
             "mision" :          profile_user.client.mision,
-            "vision" :          profile_user.client.vision
-        })
+            "vision" :          profile_user.client.vision,
+            "client_type":      client.client_type,
+            "products":         Product.objects.filter(client_fk = user_id)
+        }
         
-        context = RequestContext(request)
         if request.method == 'POST':
-            form = ProductForm(request.POST)
+            form = ProductForm(request.POST, request.FILES)
             if form.is_valid():
                 dictionary["form"] = ProductForm()
-                form.save(commit = True)
-                return render_to_response('general/profile.html', dictionary, context)
+                new_product = form.save(commit = False)
+                new_product.client_fk = Client.objects.get(pk = user_id)
+                new_product.save()
+                return render(request, 'general/profile.html', dictionary)
             else:
                 #The supplied form contained errors - just print them to the terminal.
                 dictionary["form"] = form
@@ -60,7 +64,7 @@ def profile(request):
         else:
             dictionary["form"] = ProductForm()
         
-        return render_to_response('general/profile.html', dictionary) #, context)
+        return render(request, 'general/profile.html', dictionary)
     except ObjectDoesNotExist:
         return redirect('/profile/update')
 
@@ -76,37 +80,29 @@ def profile_update(request):
             print form.errors
             return redirect('/profile/update')
     
-    dictionary = RequestContext(request, {})
+    dictionary = {
+        "title":            "Actualiza tu Perfil",
+        }
     dictionary["form"] = UserUpdateForm(initial={'user_id': request.user.id})
-    return render_to_response('general/profile_update.html', dictionary)
-
-@login_required(login_url='/')
-@csrf_protect
-def new_product(request):
-    context = RequestContext(request)
-    if request.method == 'POST':
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            form.save(commit = True)
-            return landing(request)
-        else:
-            print form.errors
-    else:
-        template = loader.get_template('products/new.html')
-        context = RequestContext(request, {
-            "title": "Registro de Productos"
-        })
-        form = ProductForm()
-    return render_to_response('products/new.html', {'form': form}, context)
+    return render(request, 'general/profile_update.html', dictionary)
 
 @login_required(login_url='/')
 def product(request, id_product):
-    template = loader.get_template('products/detail.html')
-    context = RequestContext(request, {
-        "title": "Vista Detalle",
-        "product_name": id_product
-    })
-    return HttpResponse(template.render(context))
+    user_id = request.user.id
+    profile_user = User.objects.get(pk = user_id)
+    client = Client.objects.get(pk = user_id)
+    product = Product.objects.get(pk = id_product)
+
+    dictionary = {
+        "title":            "Vista Detalle",
+        "contact" :         profile_user.get_full_name(),
+        "org_name" :        client.org_name,
+        "phone" :           client.phone,
+        "address" :         client.address,
+        "product":          Product.objects.get(pk = id_product),
+    }
+
+    return render(request, 'products/detail.html', dictionary)
 
 
 '''
@@ -155,3 +151,16 @@ def logout(request):
     """
     django_logout(request)
     return redirect('/')
+
+"""
+def handler404(request):
+    response = render(request, '404.html', {})
+    response.status_code = 404
+    return response
+
+
+def handler500(request):
+    response = render(request, '500.html', {})
+    response.status_code = 500
+    return response
+"""

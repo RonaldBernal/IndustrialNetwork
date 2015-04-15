@@ -12,7 +12,6 @@ urlpatterns = patterns('',
     url(r'^profile/$', 'app.views.profile', name = 'profile'),
     url(r'^profile/update$', 'app.views.profile_update', name = 'profile_update'),
     url(r'^product/(\d+)', 'app.views.product', name='product'),
-    url(r'^product/new$', 'app.views.new_product', name='product'),
     
     # User auth url
     url(r'^register/', 'app.views.register', name='register'),
